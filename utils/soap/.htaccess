@@ -1,0 +1,5 @@
+AuthType Basic
+AuthName "Intranet RPC Use Only"
+AuthUserFile /usr/local/apache/conf/amavisnewsql.users
+Require valid-user
+

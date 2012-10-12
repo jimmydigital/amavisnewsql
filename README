@@ -1,0 +1,355 @@
+AmavisNewSQL 0.8.0 git
+
+AmavisNewSQL - Amavis-New+SQL+SpamAssassin+Quarantine DB plugin for SquirrelMail
+
+Author: Jared Watkins <jared <at-or-about> watkins.net>
+
+If you like this program.. see my gift suggestion links...
+Anyone who gifts me something will have their name added to the Acknowledgements
+section. Earn your place of glory today. =]
+
+   http://www.amazon.com/gp/registry/registry.html/102-4175228-0195360?%5Fencoding=UTF8&id=1J21CZXG6QJ44
+
+   http://www.thinkgeek.com/brain/gimme.cgi?wid=81d08db4d
+
+   http://www.newpiper.com/fleet/saratogaIItc/index.asp
+      or
+   http://www.cirrusdesign.com/sr22g2intro/index.html
+
+   (I'm only half joking about those last two)
+
+
+
+
+The AmavisNewSQL SquirrelMail plugin lets users change a pre-defined set of
+SpamAssassin settings when those settings are stored in a SQL DB
+rather than a config file. It also allows you to use a quarantine database
+for questionable mail. This plugin was designed with enterprise use in mind.
+
+The primary difference between this plugin and some others.. is that it is
+designed to work with amavis-new rather than SpamAssassin directly. If you
+have a large or high volume site.. amavis-new is the preferred way of doing it.
+
+
+
+REQUIREMENTS
+
+o SquirrelMail 1.4x
+
+o PEAR Supported Database (tested with recent versions of Postgres and MySQL)
+  http://pear.php.net/packages.php
+
+o Pear Net/SMTP (for resending quarantine messages)
+o Pear Log (for the process_bsmtp.php)
+o Pear DB
+
+o htmlMimeMail Class (included, for digest mailings)
+
+o This plugin can not use the native SquirrelMail options database
+  so you will need a database just for these amavis-new settings.
+  (see the included schema file)
+
+o This plugin makes use of a quarantine system for messages that would normally
+  be blocked.  Please use the provided process_bsmtp.php script from this
+  package instead of the one that ships with spamassassin.. Please see the
+  section on the Quarantine DB settings for how to configure it.
+
+
+
+
+
+INSTALLATION
+
+o These directions assume you already have a working install of amavis-new
+  with spamassassin, SquirrelMail and the database installed.
+
+o Create the directory .notstored under your spamquarantine directory
+  (usually /var/virusmails)  and make it owned by the amavis user.  When
+   a message is not able to be processed it will be placed in this directory
+   and an error written to the mail log.
+
+o Install PEAR modules - Usually just 'pear install <module>'
+
+o Unpack in the plugins directory of your SM installation.
+
+o Copy config.php.dist to config.php and edit config.php to change the
+  DSN and domain names for your webmail URL and digest mailings.
+
+o Create the amavis user account in your database
+
+o Create the database called amavis owned by the amavis user.
+
+  NOTE - If using Postgres be sure to set the encoding to SQL_ASCII
+         ie: CREATE DATABASE "amavis" WITH TEMPLATE = template1 ENCODING = 0;
+
+o Import the schema file in the utils directory appropriate for your DB
+   - Default schema files are provided for Postgres and MySQL
+
+o Edit cleanquarantine.php and set the path info.
+
+o Edit generatedigest.php and set the path info.
+
+o If you don't want to run the cron scripts directly from the plugin directory
+  or if you are running them from a different system
+
+  - Create the directory /usr/local/amavisnewsql
+  - Copy (or symlink) the following things to /usr/local/amavisnewsql
+    - process_bsmtp.php
+    - cleanquarantine.php
+    - generatedigest.php
+    - config.php
+    - amavisnewsql.class.php
+
+o Edit the process_bsmtp.php script and change the BASEINCLUDE setting to
+  match your directory. This script must be located on the same system with your
+  amavis-new install since it picks up quarantined messages and places
+  them in the database.
+
+
+o Set up cron jobs for cleanquarantine.php, process_bsmtp.php and
+  generatedigest.php (suggested entries listed below)
+
+o In amavisd.conf change the default sql statement for
+  $sql_select_white_black_list to the following:
+
+$sql_select_white_black_list = 'SELECT wb FROM wblist'.
+  ' WHERE (rid=?) AND (wblist.email IN (%k))'.
+  ' ORDER BY wblist.priority DESC';
+
+o Also in amavisd.conf be sure to enable sql lookups with
+  @lookup_sql_dsn to match your database settings.
+
+o Also in amavisd.conf Use the bsmtp methods:
+
+  $virus_quarantine_method = "bsmtp:$QUARANTINEDIR/virus-%i-%n.bsmtp";
+  $spam_quarantine_method = "bsmtp:$QUARANTINEDIR/spam-%b-%i-%n.bsmtp";
+
+  $virus_quarantine_to = 'virus-quarantine';
+
+
+o Enable the amavisnewsql plugin.
+
+
+
+
+
+QUARANTINE DB
+
+This plugin supports a spam/virus quarantine where messages
+can be stored and reviewed.. released or automaticly deleted.
+
+Here is how it works...
+
+1. If a message crosses the user settable upper threshold amavis-new
+   will stash it in a quarantine folder (/var/virusmails by default)
+
+2. A cron script included with this plugin (process_bsmtp.php)
+   will scan that directory and place all messages into the
+   database.
+
+3. Another cron script (generatedigest.php) will scan the database once a day
+   and send a 'digest' email to each user showing what is in their
+   quarantine.  The frequency of this mailing is settable for each user.
+   The digest will only contain the sender address, subject, date and SA score.
+
+4. If mail sits in the quarantine long enough.. it will be cleaned up
+   by a third cron script (cleanquarantine.php) which will remove
+   everything older than a certain number of days.. settable for each user.
+
+
+
+
+Suggested cron entries are:
+
+*/5 * * * * root /usr/local/amavisnewsql/process_bsmtp.php
+0 15 * * * root /usr/local/amavisnewsql/cleanquarantine.php
+30 16 * * * root /usr/local/amavisnewsql/generatedigest.php
+
+I use 4:30pm so that people may review their quarantine before the work day
+is over and still have a high chance of seeing everything from that day.
+
+
+
+
+
+DIGEST MAILINGS
+
+If you want to let your users know what is sitting in their mail
+quarantine from time to time.. use the generatedigest.php script.
+
+Edit the first line of generatedigest.php to point to the location
+of your php binary.
+
+To format and send mail messages I use the htmlMimeMail class
+which I include in this tarball. The original can be found at
+http://www.phpguru.org/mime.mail.html
+
+To install the class do this as root:
+
+  mv htmlMimeMail-2.5.1 /usr/local/lib/php
+
+  chown -R root.root /usr/local/lib/php/htmlMimeMail-2.5.1/
+
+  ln -s /usr/local/lib/php/htmlMimeMail-2.5.1 /usr/local/lib/php/htmlMimeMail
+
+
+The script will lookup the value of the 'digest' field in the 'users' table
+from the amavis database. It will mail Monthly users on the first of the
+month.. and Weekly users on Friday at whatever time you set in the cron job.
+
+
+
+
+
+SUPPORTED SPAMASSASSIN SETTINGS
+
+This plugin only allows the users to change a subset of all possible options for
+amavis-new/spamassassin.  This is done on purpose as to not make things more
+complicated than they need to be for the masses.
+
+o whitelist / blacklist
+o tag2 Score Level
+o Kill (Quarantine) Score Level
+
+This plugin alone does not provide any administrative tools or front end to
+manage all the users data... all main functions are in a class though so that
+you may incorporate that management into your own tools.  I am also working on a
+cyrus/ldap management system that also ties into this plugin.  This project is
+at http://sourceforge.net/projects/ldapcyradm/  It is still in CVS at this point
+but it is very complete...  it just requires a lot of custom ldap settings to
+adapt to your site.
+
+
+
+
+FAQ
+
+Q: How is this plugin different from the other many SpamAssassin plugins for SM?
+
+A:    This plugin is specifically for use with Amavis-New which calls
+   SpamAssassin. The database schema is very different between the two setups
+   and at the time of writing this there was not an amavis specific plugin
+   out there.  This also allows you to use a database quarantine.
+
+
+
+Q: How can I adjust the default policy settings?
+
+A:    These defaults are set on the database columns.. using your admin
+   tool of choice... simply change the default on each column.
+
+
+
+Q: What if I don't want to use the quarantine database?
+
+A:    If you do not wish to use the quarantine database you must change things in two
+   places.   In the config file find variable $CONFIG["use_quarantine"] and change
+   it to false. Also.. in the database.. on the policy table you will need to remove
+   the default setting for column spam_quarantine_to and delete that column for policy id 2
+   (from the default schema). That will ensure new users don't have their mail
+   quarantined.
+
+A2: With 0.8.0 it is now possible to turn the quarantine on and off as a per user setting.
+    The only options are either on.. which will quarantine high scoring messages.  Or
+    reject which will cause amavis-new to reject them after processing.
+
+
+
+Q: My users have multiple addresses on their account.. how does this work?
+
+A: Since the number of possible email addresses that can be associated with an account is
+   near infinate.. I chose to simplify the process of keeping track by making an assumption.
+   My code assumes that for a given account..  all possible valid email aliases have been
+   rewritten back to one base address.  A system address if you like.  This is the address
+   that is used to match the user up between SQM, amavis-new, and my plugin.  In postfix
+   I do this with virtual alias tables that are re-created once an hour by a script.
+
+
+
+Q: I'm seeing the error "Recipient X does not exist in the database... "
+
+A: You should never see this in a properly working setup. The way amavis-new decides to
+   quarantine a message is by first looking up the recipient in the database.. checking
+   their policy settings.. and then writing the bsmtp file only if everything is in
+   agreement.  If a recipient is not in the database the query should return the
+   'catch all' user which has the quarantine turned off.  So... if you are seeing bsmtp
+   files created for people who are not in the database..  there is a problem somewhere
+   since those files shouldn't be created if everything is configured correctly.
+
+
+
+Q: Where can I find more about how/why things are done?
+
+A: If not answered here.. check table comments in the database or read the source..
+   My coding is not /that/ hard to follow.
+
+
+Q: Should I use mysql or postgres?
+
+A: For this.. I can only give my personal preference.  I like and use postgres in
+   in production at work.  There are lots of reasons I could give you for this choice
+   like the advanced features (which I can't use because I maintain compat with mysql),
+   better (more free) license, the fact that postgres will not silently change
+   data as it's being inserted (as mysql can do in certain situations), or even
+   how they both perform under heavy load.  There are many reasons people automatically
+   think of mysql when they think DB under linx.. but while lesser known.. postgres
+   is a better choice for important things I believe.  Please don't write me with
+   near-meaningless benchmark reports of how mysql is (faster|better|cheaper) or how
+   everyting is fixed in the latest version X... you won't change my mind.. I have
+   seen it all before. =]
+
+
+KNOWN BUGS
+
+o  Not all amavis-new settings are visible to the end user.  Yes I know that..
+   it's not a bug so much as a non-feature.  I believe to show everything would
+   be too confusing to the average user.. and not provide any real benefit.
+
+
+
+TODO
+
+o foo - Suggestions?
+
+
+See my (jimmydigital) other project(s) at freshmeat:
+http://freshmeat.net/~jimmydigital/
+
+and my blog at:
+http://infinitusi.blogsite.org/
+
+
+
+
+ACKNOWLEDGMENTS
+
+Thanks to the SquirrelMail team for builing such a great app and
+for all the work they do to keep it running.
+
+Thanks to various people of irc for helping me kick around ideas.
+
+Thanks to all those who have sent in patches or suggested improvements.
+
+
+
+I would like to acknowledge the following people for specific contributions
+of code or goodies:
+
+o Peter Collinson for help modifying process_bsmtp.pl (Used in previous versions)
+
+o Stefano Ruberti for adding multi language support
+
+o Phil Schilling -  Thanks for the DVD!
+
+o Wolfgang - Thanks for the two books!
+
+o Joe - Thanks for the book and DVD!
+
+o Robert Stoeber - Thanks for the books and CD!
+
+o Luca Gibelli - Thanks for the book!
+
+o Shane Hickey - Thanks for the book!
+
+. . . Your name here . . .
+
