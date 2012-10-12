@@ -1,0 +1,26 @@
+0.8.0
+  
+  Big changes in all scripts... and a slight change in the config file and class interface.
+  You will need to replace what you have with the 0.8 versions if you are upgrading from 
+  a 0.7.x version.  To your existing config file add the default_domain option.. see the 
+  example config for details.
+  
+  Make sure you have created the .notstored directory... check out step 2 under the
+  install directions. 
+
+
+-----
+
+The biggest change for this release is that I've eliminated the perl scripts..
+so now everything uses a common class and config file.
+
+Starting with version 0.7 process_bsmtp.php is the script to use to inject quarantined
+messages into your database.  If you have problems getting it to work.. the similar
+perl scripts from the 0.6 release may also be used (for now).  In the 0.8 release I plan to
+add support for master/slave replicated databases and the perl versions will not be updated.
+
+To support this new script you will need to install PEAR Log.
+
+
+
+

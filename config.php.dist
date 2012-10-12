@@ -1,0 +1,57 @@
+<?php
+
+// DSN for DB
+// Format is DBTYPE://USERNAME:PASSWORD@HOST/DATABASE
+// See PEAR docs for supported database types
+
+$CONFIG["dsn"] = 'pgsql://postgres:@localhost/amavis';
+
+
+// The id in the users table of your '.' catch all entry for global w/b listing
+$CONFIG["global_user_id"] = 1;
+
+// Table Names
+$CONFIG["wblist_table"] = "wblist";
+$CONFIG["users_table"] = "users";
+$CONFIG["policy_table"] = "policy";
+
+
+// Used when auto creating new users in the database for this program.
+// The important bit is that amavis-new must have the base email address to
+// associate with a username.  By default I use username@default_domain.
+// If this is not correct for your site.. you should change it in the setup.php file.
+// See the FAQ in the readme file for more info on this.
+
+$CONFIG["default_domain"] = "yourdomain.com";
+
+
+/**
+ * QUARANTINE Settings
+ * If you choose to use the quarantine system you will need to
+ * modify and install three cron scripts.
+ * process_bsmtp.php, cleanquarantine.php, and generatedigest.php
+ *
+ * You will also need to modify your amavis-new config file
+ * to stick messages into the quarantine directory.
+ * Please see the README file for what needs to be changed.
+ */
+
+$CONFIG["use_quarantine"] = true;    // true or false
+
+
+// These are used for the modified process_bsmtp.php script
+// that comes with this package - DO NOT use the version that
+// comes with amavis-new
+
+$CONFIG["msg_table"] = "msg";
+$CONFIG["msgowner_table"] = "msgowner";
+
+$CONFIG["smtp_host"] = "localhost";
+$CONFIG["smtp_port"] = 10025;
+
+// Used for the quarantine digest email text.
+$CONFIG["webmail_url"] = "http://webmail.yourdomain.com";
+$CONFIG["digest_subject"] = "Mail Server Quarantine Report";
+$CONFIG["digest_from"] = '"Spam Assassin" <noreply@yourdomain.com>';
+
+?>

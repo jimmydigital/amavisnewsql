@@ -1,0 +1,42 @@
+SOAP was introduced in 0.5
+
+Here I will expose common methods that you might want to use to integrate
+this software into other management tools you already have. In my case the
+first use for this was to remove all data related to a user when they were
+terminated from the company. If you don't do this.. there is a danger of
+mail continuing to be quarantined after they are gone.
+
+I am using the lib called nusoap which I include here.. but can be obtained
+from the source at: http://dietrich.ganx4.com/nusoap/index.php
+
+I have provided an example of how to use a client call with this soap server.
+Most of the work takes place in the class.. so not much is required to add
+to what I have here.
+
+TO USE
+
+The soap server may be called directly from your SM plugins directory..
+if you do that the only files in this directory should be the server.php
+and .htaccess file.  Move soapclient.php and nusoap.php to somewhere else..
+anywhere else in your web tree will do. Since these SOAP calls should
+only be made from your internal network.. I only wrote this to use a minimum
+of security... feel free to change this and send me a copy if you desire
+something stronger.  If you keep the server.php file somewhere other than this
+soap directory you will need to edit the path information to load the other
+required files.
+
+You need to edit .htaccess and create the user account file that has
+access to run the methods in the server. See the docs on htaccess files
+in apache if you don't know how to do this. If you stick with my file
+location the command would be something like this:
+
+/usr/local/apache/bin/htpasswd -cm /usr/local/apache/conf/amavisnewsql.users <username> <password>
+
+That username and password should then be used in your client call.. see my sample client
+for an example.
+
+I have not tried these soap methods from languages other than php... and this is my first use
+of the nusoap library.  So let me know if you find this useful.
+
+jw
+

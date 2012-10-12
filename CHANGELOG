@@ -1,0 +1,46 @@
+CHANGELOG - Started with version 0.8.0
+
+
+0.8
+
+o Added the ability to turn the quarantine off on a per user basis.
+   - If a user has one of the predefined policys active and the choose to not use the quarantine
+     it will create them a custom policy with the same tag/kill values as they had before.  Once they
+     have a custom policy in affect... if they choose a predefined policy it will switch to that.. and
+     remove the custom policy from the policy table.. loosing their custom scoring values and restoring
+     the use of the quarantine.
+
+o Fixed quarantine display to show a page header even when no messages are in the quarantine.
+
+o Moved the code that adds a new user into the amavis database to be run from setup.php instead
+  of amavisnewsql.php.  This has the affect that new users will be added the first time they
+  log into webmail instead of the first time they visit the plugin options page as before.
+  An assumption had to be made in relation to the persons email address.. Now when a new user
+  logs into webmail for the first time.. it will create an email address based on
+  their username and the default domain from the config file.  The code where this happens
+  is in the setup.php file around line 60. You should customize this part if it does not work
+  with your site.  If they already have an email address set in the personal info section of SQM
+  it will use that. Make sure this email address matches the 'base address' if you use multiple
+  addresses per account. See the FAQ in the readme for an explanation.
+
+o Reordered the process of storing quarantined messages in process_bsmtp.php.  Now..  if a
+  recipient is not in the database the message in question will not be stored.  Please see
+  the FAQ in the readme about this issue.  Thanks for the tip on this to Nick Davis
+
+o Limited the digest mailing to the top 100 lowest scoring messages
+
+o The quarantine page now limits the number of messages per page... it uses the same value
+  as the 'Number of Messages to Index' option on the Display Preferences page.
+
+o cleanquarantine.php script has been updated to also remove all messages that are not owned
+  by anyone in the users table.  I know this has been a problem for some sites...
+
+o Moved the listQuarantineMessages function from the generatedigest script into the class.
+
+o Changed quotestring to use the php addslashes function for storing emails in the database.
+
+o Changes to support virtual domains.  If the username is passed in with an @ sign it will
+  (for a new user) use that for the email address as well.  If it does not have an @ sign it
+  will assemble an email from the default domain set in the config file. 
+
+  
