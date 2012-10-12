@@ -1,0 +1,4 @@
+amavisnewsql
+============
+
+AmavisNewSql Squirrelmail Plugin
