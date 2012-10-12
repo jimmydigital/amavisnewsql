@@ -1,22 +1,14 @@
-AmavisNewSQL 0.8.0 git
+AmavisNewSQL 0.9.0
 
 AmavisNewSQL - Amavis-New+SQL+SpamAssassin+Quarantine DB plugin for SquirrelMail
 
-Author: Jared Watkins <jared <at-or-about> watkins.net>
+Author: Jared Watkins <jared <at-or-about> jaredwatkins.com>
 
 If you like this program.. see my gift suggestion links...
 Anyone who gifts me something will have their name added to the Acknowledgements
 section. Earn your place of glory today. =]
 
    http://www.amazon.com/gp/registry/registry.html/102-4175228-0195360?%5Fencoding=UTF8&id=1J21CZXG6QJ44
-
-   http://www.thinkgeek.com/brain/gimme.cgi?wid=81d08db4d
-
-   http://www.newpiper.com/fleet/saratogaIItc/index.asp
-      or
-   http://www.cirrusdesign.com/sr22g2intro/index.html
-
-   (I'm only half joking about those last two)
 
 
 
@@ -41,7 +33,7 @@ o PEAR Supported Database (tested with recent versions of Postgres and MySQL)
 
 o Pear Net/SMTP (for resending quarantine messages)
 o Pear Log (for the process_bsmtp.php)
-o Pear DB
+o Pear MDB2
 
 o htmlMimeMail Class (included, for digest mailings)
 
@@ -125,6 +117,9 @@ o Also in amavisd.conf Use the bsmtp methods:
   $spam_quarantine_method = "bsmtp:$QUARANTINEDIR/spam-%b-%i-%n.bsmtp";
 
   $virus_quarantine_to = 'virus-quarantine';
+
+o Also in in the amavisd config set: 
+  $quarantine_subdir_levels = 0; # enable quarantine dir hashing
 
 
 o Enable the amavisnewsql plugin.

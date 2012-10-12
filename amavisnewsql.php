@@ -8,26 +8,47 @@
  * @package amavisnewsql
  * $Id: amavisnewsql.php, v
 */
+if (file_exists('../../include/init.php'))  
+{
+    include_once('../../include/init.php');
 
-if (!defined('SM_PATH')) { define('SM_PATH' , '../../'); }
+    // include/validate.php contains the SquirelMail startup code from
+    // SquirrelMail 1.4.0 up to SquirrelMail 1.5.1
+    //
+} elseif (file_exists('../../include/validate.php'))  
+{
+    define('SM_PATH', '../../');
+    include_once(SM_PATH . 'include/validate.php');
+}
 
-include_once(SM_PATH.'include/validate.php');
-include_once(SM_PATH.'functions/page_header.php');
+global $plugins;
+if (!in_array('amavisnewsql', $plugins)) exit;
+
+###########################
+
+
+#if (defined(SM_PATH)) print "Yes";
+#if (!defined('SM_PATH')) { define('SM_PATH' , '../../'); }
+
+#include_once(SM_PATH.'include/validate.php');
+#include_once(SM_PATH.'functions/page_header.php');
 include_once(SM_PATH.'include/load_prefs.php');
 include_once(SM_PATH.'functions/i18n.php');
 
-require('config.php');
-include_once('functions.php');
-include_once('amavisnewsql.class.php');
+require(SM_PATH.'plugins/amavisnewsql/config.php');
+require(SM_PATH.'plugins/amavisnewsql/functions.php');
+require(SM_PATH.'plugins/amavisnewsql/amavisnewsql.class.php');
+
 
 /* Set up locale, for the error messages. */
 $prev = bindtextdomain ('amavisnewsql', SM_PATH . 'plugins/amavisnewsql/locale');
-textdomain ('amavisnewsql');
+sq_change_text_domain('amavisnewsql');
+#textdomain ('amavisnewsql');
 
 
-//error_reporting(E_ALL);
+error_reporting(E_ALL);
 
-sqgetGlobalVar('username',  $username,      SQ_SESSION);
+sqgetGlobalVar('username',  $username, SQ_SESSION);
 
 // Depending on how people login.. some virtual domain setup pass in wrongly formatted usernames
 // like user@domain.com@domain.com  This checks for it.. and removes the second.
@@ -44,6 +65,8 @@ if(isset($_REQUEST)) {
    sqgetGlobalVar('action', $action, 'SQ_REQUEST');
    sqgetGlobalVar('row', $row, 'SQ_REQUEST');
 }
+
+#print "User: $username, Action $action, $row<br>\n";
 
 //Connect to the DB
 $dbfp = new AmavisNewSQL($CONFIG);
@@ -150,6 +173,6 @@ if (!$dbfp->connect()) {
 
    }
 
-
+sq_change_text_domain('squirrelmail');
 
 ?>

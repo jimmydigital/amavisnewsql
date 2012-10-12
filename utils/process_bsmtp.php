@@ -1,4 +1,4 @@
-#!/usr/local/bin/php -q
+#!/usr/bin/php -q
 <?php
 /**
  * @license http://opensource.org/licenses/gpl-license.php GNU Public License
@@ -17,15 +17,15 @@
  * Be sure to include a trailing slash
 */
 
-DEFINE ("BASEINCLUDE", "/htdocs/squirrel/plugins/amavisnewsql/");
+DEFINE ("BASEINCLUDE", "/var/www/squirrel/plugins/amavisnewsql/");
 DEFINE ("QUARANTINEDIR", "/var/virusmails");
 
 
 // You should not have to change anything below this line
 // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-include(BASEINCLUDE."config.php");
-include(BASEINCLUDE."amavisnewsql.class.php");
-include "Log.php";
+require(BASEINCLUDE."config.php");
+require(BASEINCLUDE."amavisnewsql.class.php");
+require "Log.php";
 
 
 $dbfp = new AmavisNewSQL($CONFIG);
@@ -99,7 +99,7 @@ function process_file($dbfp, $file) {
                 } else if (preg_match("/^Subject: (.*)/", $line, $match)) {
                     $store["subject"] = trim($match[1]);
 #                } else if (preg_match("/^X-Spam-Status:.*hits=([0-9]{1,2}\.[0-9])/", $line, $match)) {
-                } else if (preg_match("/^X-Spam-Status:.*hits=([0-9]+\.[0-9]+)/", $line, $match)) {
+                } else if (preg_match("/^X-Spam-Status:.*score=([0-9]+\.[0-9]+)/", $line, $match)) {
                     $store["score"] = trim($match[1]);
                 }
                 $store["body"] .= $line;

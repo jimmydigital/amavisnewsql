@@ -5,7 +5,7 @@
 -- !! When you create the database be sure to use SQL_ASCII Encoding! !!
 
 
-\connect amavis amavis
+--\connect amavisnewsql amavisnewsql
 
 SET search_path = public, pg_catalog;
 

@@ -1144,7 +1144,7 @@ class AmavisNewSQL {
          $this->error = null;
 
          if(ereg("@", $string)) {
-             $q = "select id from $this->users_table where email = '$string'";
+             $q = "select id from $this->users_table where email = '$string' or username = '$string'";
          } else {
              $q = "select id from $this->users_table where username = '$string'";
          }

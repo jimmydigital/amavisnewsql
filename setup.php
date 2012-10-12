@@ -47,8 +47,8 @@ function amavisnewsql_version()
 function amavisnew_right_main_bottom () {
 
     if (!sqsession_is_registered('inamavis')) {
-
-    require('config.php');
+    include_once(SM_PATH . 'plugins/amavisnewsql/config.php');
+    #require('config.php');
     sqgetGlobalVar('username',  $username, SQ_SESSION);
     
     // Depending on how people login.. some virtual domain setup pass in wrongly formatted usernames
@@ -75,8 +75,8 @@ function amavisnew_right_main_bottom () {
         setpref($data_dir, $username, 'email_address', $email);
     }
 
-        include_once('functions.php');
-        include_once('amavisnewsql.class.php');
+        include_once(SM_PATH.'plugins/amavisnewsql/functions.php');
+        include_once(SM_PATH.'plugins/amavisnewsql/amavisnewsql.class.php');
         include_once(SM_PATH.'include/validate.php');
         include_once(SM_PATH.'include/load_prefs.php');
         global $data_dir;
@@ -114,10 +114,7 @@ function amavisnew_right_main_bottom () {
                $inamavis = 't';
                sqsession_register($inamavis, 'inamavis');
         }
-
-
     }
-
 }
 
 
@@ -125,7 +122,6 @@ function amavisnew_right_main_bottom () {
 
 function squirrelmail_plugin_init_amavisnewsql () {
   global $squirrelmail_plugin_hooks;
-  require('config.php');
 
   $squirrelmail_plugin_hooks['optpage_register_block']['amavisnewsql'] = 'amavisnewsql_optpage_register_block';
 
@@ -133,11 +129,7 @@ function squirrelmail_plugin_init_amavisnewsql () {
 
   $squirrelmail_plugin_hooks['right_main_bottom']['amavisnewsql'] = 'amavisnew_right_main_bottom';
 
-  if($CONFIG["use_quarantine"]) {
-     $squirrelmail_plugin_hooks['menuline']['amavisnewsql'] = 'amavisnewsql_spam_quarantine';
-     #$squirrelmail_plugin_hooks['left_main_after']['amavisnewsql'] = 'amavisnewsql_spam_quarantine';
-  }
-
+  $squirrelmail_plugin_hooks['menuline']['amavisnewsql'] = 'amavisnewsql_spam_quarantine';
 }
 
 
@@ -165,21 +157,28 @@ function amavisnewsql_address_add() {  // Borrowed from address_add plugin
 
 
 function amavisnewsql_optpage_register_block () {
-  global $optpage_blocks;
-
-  $optpage_blocks[] =
-    array (
-           'name' => _("SpamAssassin Configuration"),
-           'url'  => '../plugins/amavisnewsql/amavisnewsql.php',
-           'desc' => _("Here you may define your own white/black lists and customize your spam scoring rules."),
-           'js'   => FALSE);
+    global $optpage_blocks;
+    sq_change_text_domain('amavisnewsql');
+    $optpage_blocks[] =
+      array (
+             'name' => _("Spam Protection"),
+             'url'  => sqm_baseuri() .'plugins/amavisnewsql/amavisnewsql.php',
+             'desc' => _("Define your own white/black lists and customize your spam scoring rules."),
+             'js'   => FALSE
+            );
+    sq_change_text_domain('squirrelmail');
 }
 
 
-function amavisnewsql_spam_quarantine () {
+function amavisnewsql_spam_quarantine ()
+{
+    error_reporting(E_ALL);
+    require(SM_PATH . 'plugins/amavisnewsql/config.php');
 
-   displayInternalLink ('plugins/amavisnewsql/quarantine.php', _("[Quarantine] "), 'right');
-
+    if ($CONFIG["use_quarantine"])
+    {
+        displayInternalLink ('plugins/amavisnewsql/quarantine.php', _("[Quarantine] "), 'right');
+    }
 }
 
 ?>

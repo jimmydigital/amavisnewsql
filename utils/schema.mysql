@@ -1,171 +1,232 @@
-# phpMyAdmin MySQL-Dump
-# version 2.2.7-pl1
-# http://phpwizard.net/phpMyAdmin/
-# http://www.phpmyadmin.net/ (download page)
-#
-# Host: localhost
-# Generation Time: Oct 02, 2003 at 04:39 PM
-# Server version: 4.00.15
-# PHP Version: 4.3.1
-# Database : `amavis`
-# --------------------------------------------------------
+-- MySQL dump 10.13  Distrib 5.1.63, for debian-linux-gnu (x86_64)
+--
+-- Host: localhost    Database: amavisnewsql
+-- ------------------------------------------------------
+-- Server version	5.1.63-0+squeeze1-log
 
-#
-# Table structure for table `msg`
-#
+/*!40101 SET @OLD_CHARACTER_SET_CLIENT=@@CHARACTER_SET_CLIENT */;
+/*!40101 SET @OLD_CHARACTER_SET_RESULTS=@@CHARACTER_SET_RESULTS */;
+/*!40101 SET @OLD_COLLATION_CONNECTION=@@COLLATION_CONNECTION */;
+/*!40101 SET NAMES utf8 */;
+/*!40103 SET @OLD_TIME_ZONE=@@TIME_ZONE */;
+/*!40103 SET TIME_ZONE='+00:00' */;
+/*!40014 SET @OLD_UNIQUE_CHECKS=@@UNIQUE_CHECKS, UNIQUE_CHECKS=0 */;
+/*!40014 SET @OLD_FOREIGN_KEY_CHECKS=@@FOREIGN_KEY_CHECKS, FOREIGN_KEY_CHECKS=0 */;
+/*!40101 SET @OLD_SQL_MODE=@@SQL_MODE, SQL_MODE='NO_AUTO_VALUE_ON_ZERO' */;
+/*!40111 SET @OLD_SQL_NOTES=@@SQL_NOTES, SQL_NOTES=0 */;
 
-CREATE TABLE msg (
-  id int(10) unsigned NOT NULL auto_increment,
-  stype varchar(8) default 'spam',
-  sender varchar(255) default NULL,
-  subject varchar(255) default NULL,
-  body mediumtext,
-  storetime int(11) default NULL,
-  score float default NULL,
-  UNIQUE KEY id (id)
-) TYPE=MyISAM;
+--
+-- Table structure for table `msg`
+--
 
-#
-# Dumping data for table `msg`
-#
+DROP TABLE IF EXISTS `msg`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `msg` (
+  `id` int(10) unsigned NOT NULL AUTO_INCREMENT,
+  `stype` varchar(8) DEFAULT 'spam',
+  `sender` varchar(255) DEFAULT NULL,
+  `subject` varchar(255) DEFAULT NULL,
+  `body` mediumtext,
+  `storetime` int(11) DEFAULT NULL,
+  `score` float DEFAULT NULL,
+  UNIQUE KEY `id` (`id`)
+) ENGINE=InnoDB AUTO_INCREMENT=13 DEFAULT CHARSET=latin1;
+/*!40101 SET character_set_client = @saved_cs_client */;
 
-# --------------------------------------------------------
+--
+-- Dumping data for table `msg`
+--
 
-#
-# Table structure for table `msg_id_seq`
-#
+LOCK TABLES `msg` WRITE;
+/*!40000 ALTER TABLE `msg` DISABLE KEYS */;
+/*!40000 ALTER TABLE `msg` ENABLE KEYS */;
+UNLOCK TABLES;
 
-CREATE TABLE msg_id_seq (
-  id bigint(20) unsigned NOT NULL default '0',
-  PRIMARY KEY  (id)
-) TYPE=MyISAM;
+--
+-- Table structure for table `msg_id_seq`
+--
 
-#
-# Dumping data for table `msg_id_seq`
-#
+DROP TABLE IF EXISTS `msg_id_seq`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `msg_id_seq` (
+  `id` bigint(20) unsigned NOT NULL DEFAULT '0',
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+/*!40101 SET character_set_client = @saved_cs_client */;
 
-INSERT INTO msg_id_seq (id) VALUES (1);
-# --------------------------------------------------------
+--
+-- Dumping data for table `msg_id_seq`
+--
 
-#
-# Table structure for table `msgowner`
-#
+LOCK TABLES `msg_id_seq` WRITE;
+/*!40000 ALTER TABLE `msg_id_seq` DISABLE KEYS */;
+INSERT INTO `msg_id_seq` VALUES (12);
+/*!40000 ALTER TABLE `msg_id_seq` ENABLE KEYS */;
+UNLOCK TABLES;
 
-CREATE TABLE msgowner (
-  msgid int(10) unsigned NOT NULL default '0',
-  rid int(11) NOT NULL default '0'
-) TYPE=MyISAM;
+--
+-- Table structure for table `msgowner`
+--
 
-#
-# Dumping data for table `msgowner`
-#
+DROP TABLE IF EXISTS `msgowner`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `msgowner` (
+  `msgid` int(10) unsigned NOT NULL DEFAULT '0',
+  `rid` int(11) NOT NULL DEFAULT '0'
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+/*!40101 SET character_set_client = @saved_cs_client */;
 
-# --------------------------------------------------------
+--
+-- Dumping data for table `msgowner`
+--
 
-#
-# Table structure for table `policy`
-#
+LOCK TABLES `msgowner` WRITE;
+/*!40000 ALTER TABLE `msgowner` DISABLE KEYS */;
+/*!40000 ALTER TABLE `msgowner` ENABLE KEYS */;
+UNLOCK TABLES;
 
-CREATE TABLE policy (
-  id int(10) unsigned NOT NULL auto_increment,
-  policy_name varchar(32) default NULL,
-  virus_lover char(1) default 'N',
-  spam_lover char(1) default 'N',
-  banned_files_lover char(1) default 'N',
-  bad_header_lover char(1) default 'N',
-  bypass_virus_checks char(1) default 'N',
-  bypass_spam_checks char(1) default 'N',
-  bypass_banned_checks char(1) default 'N',
-  bypass_header_checks char(1) default 'N',
-  spam_modifies_subj char(1) default 'Y',
-  spam_quarantine_to varchar(64) default 'spam-quarantine',
-  spam_tag_level float default '-999',
-  spam_tag2_level float default NULL,
-  spam_kill_level float default NULL,
-  UNIQUE KEY id (id)
-) TYPE=MyISAM;
+--
+-- Table structure for table `policy`
+--
 
-#
-# Dumping data for table `policy`
-#
+DROP TABLE IF EXISTS `policy`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `policy` (
+  `id` int(10) unsigned NOT NULL AUTO_INCREMENT,
+  `policy_name` varchar(32) DEFAULT NULL,
+  `virus_lover` char(1) DEFAULT 'N',
+  `spam_lover` char(1) DEFAULT 'N',
+  `banned_files_lover` char(1) DEFAULT 'N',
+  `bad_header_lover` char(1) DEFAULT 'N',
+  `bypass_virus_checks` char(1) DEFAULT 'N',
+  `bypass_spam_checks` char(1) DEFAULT 'N',
+  `bypass_banned_checks` char(1) DEFAULT 'N',
+  `bypass_header_checks` char(1) DEFAULT 'N',
+  `spam_modifies_subj` char(1) DEFAULT 'Y',
+  `spam_quarantine_to` varchar(64) DEFAULT 'spam-quarantine',
+  `spam_tag_level` float DEFAULT '-999',
+  `spam_tag2_level` float DEFAULT NULL,
+  `spam_kill_level` float DEFAULT NULL,
+  UNIQUE KEY `id` (`id`)
+) ENGINE=InnoDB AUTO_INCREMENT=13 DEFAULT CHARSET=latin1;
+/*!40101 SET character_set_client = @saved_cs_client */;
 
-INSERT INTO policy (id, policy_name, virus_lover, spam_lover, banned_files_lover, bad_header_lover, bypass_virus_checks, bypass_spam_checks, bypass_banned_checks, bypass_header_checks, spam_modifies_subj, spam_quarantine_to, spam_tag_level, spam_tag2_level, spam_kill_level) VALUES (7, 'Never Tag and Never Block', 'N', 'Y', 'N', 'N', 'N', 'N', 'N', 'N', 'Y', 'spam-quarantine', '-999', '999', '999');
-INSERT INTO policy (id, policy_name, virus_lover, spam_lover, banned_files_lover, bad_header_lover, bypass_virus_checks, bypass_spam_checks, bypass_banned_checks, bypass_header_checks, spam_modifies_subj, spam_quarantine_to, spam_tag_level, spam_tag2_level, spam_kill_level) VALUES (3, 'Trigger happy', 'N', 'N', 'N', 'N', 'N', 'N', 'N', 'N', 'Y', 'spam-quarantine', '-999', '5', '5');
-INSERT INTO policy (id, policy_name, virus_lover, spam_lover, banned_files_lover, bad_header_lover, bypass_virus_checks, bypass_spam_checks, bypass_banned_checks, bypass_header_checks, spam_modifies_subj, spam_quarantine_to, spam_tag_level, spam_tag2_level, spam_kill_level) VALUES (1, 'Default_Nonuser', 'N', 'N', 'N', 'N', 'N', 'N', 'N', 'N', 'Y', ' ', '-999', '6', '12');
-INSERT INTO policy (id, policy_name, virus_lover, spam_lover, banned_files_lover, bad_header_lover, bypass_virus_checks, bypass_spam_checks, bypass_banned_checks, bypass_header_checks, spam_modifies_subj, spam_quarantine_to, spam_tag_level, spam_tag2_level, spam_kill_level) VALUES (2, 'Default', 'N', 'N', 'N', 'N', 'N', 'N', 'N', 'N', 'Y', 'spam-quarantine', '-999', '6', '12');
-INSERT INTO policy (id, policy_name, virus_lover, spam_lover, banned_files_lover, bad_header_lover, bypass_virus_checks, bypass_spam_checks, bypass_banned_checks, bypass_header_checks, spam_modifies_subj, spam_quarantine_to, spam_tag_level, spam_tag2_level, spam_kill_level) VALUES (6, 'Default Tag Never Block', 'N', 'N', 'N', 'N', 'N', 'N', 'N', 'N', 'Y', 'spam-quarantine', '-999', '6', '999');
-INSERT INTO policy (id, policy_name, virus_lover, spam_lover, banned_files_lover, bad_header_lover, bypass_virus_checks, bypass_spam_checks, bypass_banned_checks, bypass_header_checks, spam_modifies_subj, spam_quarantine_to, spam_tag_level, spam_tag2_level, spam_kill_level) VALUES (5, '6.5/7.8', 'N', 'N', 'N', 'N', 'N', 'N', 'N', 'N', 'Y', 'spam-quarantine', '-999', '6.5', '7.8');
-INSERT INTO policy (id, policy_name, virus_lover, spam_lover, banned_files_lover, bad_header_lover, bypass_virus_checks, bypass_spam_checks, bypass_banned_checks, bypass_header_checks, spam_modifies_subj, spam_quarantine_to, spam_tag_level, spam_tag2_level, spam_kill_level) VALUES (4, 'Permissive', 'N', 'N', 'N', 'Y', 'N', 'N', 'N', 'N', 'Y', 'spam-quarantine', '-999', '10', '20');
-# --------------------------------------------------------
+--
+-- Dumping data for table `policy`
+--
 
-#
-# Table structure for table `policy_id_seq`
-#
+LOCK TABLES `policy` WRITE;
+/*!40000 ALTER TABLE `policy` DISABLE KEYS */;
+INSERT INTO `policy` VALUES (1,'Default_Nonuser','N','N','N','N','N','N','N','N','Y',' ',-999,6,12),(2,'Default','N','N','N','N','N','N','N','N','Y','spam-quarantine',-999,6,12),(3,'Trigger happy','N','N','N','N','N','N','N','N','Y','spam-quarantine',-999,5,5),(4,'Permissive','N','N','N','Y','N','N','N','N','Y','spam-quarantine',-999,10,20),(5,'6.5/7.8','N','N','N','N','N','N','N','N','Y','spam-quarantine',-999,6.5,7.8),(6,'Default Tag Never Block','N','N','N','N','N','N','N','N','Y','spam-quarantine',-999,6,999),(7,'Never Tag and Never Block','N','Y','N','N','N','N','N','N','Y','spam-quarantine',-999,999,999),(12,'Custom','N','N','N','N','N','N','N','N','Y','spam-quarantine',-999,3,3);
+/*!40000 ALTER TABLE `policy` ENABLE KEYS */;
+UNLOCK TABLES;
 
-CREATE TABLE policy_id_seq (
-  id int(10) unsigned NOT NULL auto_increment,
-  PRIMARY KEY  (id)
-) TYPE=MyISAM;
+--
+-- Table structure for table `policy_id_seq`
+--
 
-#
-# Dumping data for table `policy_id_seq`
-#
+DROP TABLE IF EXISTS `policy_id_seq`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `policy_id_seq` (
+  `id` int(10) unsigned NOT NULL AUTO_INCREMENT,
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB AUTO_INCREMENT=13 DEFAULT CHARSET=latin1;
+/*!40101 SET character_set_client = @saved_cs_client */;
 
-INSERT INTO policy_id_seq (id) VALUES (11);
-# --------------------------------------------------------
+--
+-- Dumping data for table `policy_id_seq`
+--
 
-#
-# Table structure for table `users`
-#
+LOCK TABLES `policy_id_seq` WRITE;
+/*!40000 ALTER TABLE `policy_id_seq` DISABLE KEYS */;
+INSERT INTO `policy_id_seq` VALUES (12);
+/*!40000 ALTER TABLE `policy_id_seq` ENABLE KEYS */;
+UNLOCK TABLES;
 
-CREATE TABLE users (
-  id int(10) unsigned NOT NULL auto_increment,
-  priority smallint(6) NOT NULL default '7',
-  policy_id int(11) NOT NULL default '2',
-  email varchar(255) NOT NULL default '',
-  fullname varchar(255) default NULL,
-  digest char(2) default 'WD',
-  username varchar(255) default NULL,
-  retention smallint(6) default '14',
-  UNIQUE KEY id (id)
-) TYPE=MyISAM;
+--
+-- Table structure for table `users`
+--
 
-#
-# Dumping data for table `users`
-#
+DROP TABLE IF EXISTS `users`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `users` (
+  `id` int(10) unsigned NOT NULL AUTO_INCREMENT,
+  `priority` smallint(6) NOT NULL DEFAULT '7',
+  `policy_id` int(11) NOT NULL DEFAULT '2',
+  `email` varchar(255) NOT NULL DEFAULT '',
+  `fullname` varchar(255) DEFAULT NULL,
+  `digest` char(2) DEFAULT 'WD',
+  `username` varchar(255) DEFAULT NULL,
+  `retention` smallint(6) DEFAULT '14',
+  UNIQUE KEY `id` (`id`)
+) ENGINE=InnoDB AUTO_INCREMENT=5 DEFAULT CHARSET=latin1;
+/*!40101 SET character_set_client = @saved_cs_client */;
 
-INSERT INTO users (id, priority, policy_id, email, fullname, digest, username, retention) VALUES (1, 1, 1, '@.', 'Global Match', NULL, NULL, NULL);
-# --------------------------------------------------------
+--
+-- Dumping data for table `users`
+--
 
-#
-# Table structure for table `users_id_seq`
-#
+--
+-- Table structure for table `users_id_seq`
+--
 
-CREATE TABLE users_id_seq (
-  id int(10) unsigned NOT NULL auto_increment,
-  PRIMARY KEY  (id)
-) TYPE=MyISAM;
+DROP TABLE IF EXISTS `users_id_seq`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `users_id_seq` (
+  `id` int(10) unsigned NOT NULL AUTO_INCREMENT,
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB AUTO_INCREMENT=5 DEFAULT CHARSET=latin1;
+/*!40101 SET character_set_client = @saved_cs_client */;
 
-#
-# Dumping data for table `users_id_seq`
-#
+--
+-- Dumping data for table `users_id_seq`
+--
 
-INSERT INTO users_id_seq (id) VALUES (2);
-# --------------------------------------------------------
+LOCK TABLES `users_id_seq` WRITE;
+/*!40000 ALTER TABLE `users_id_seq` DISABLE KEYS */;
+INSERT INTO `users_id_seq` VALUES (4);
+/*!40000 ALTER TABLE `users_id_seq` ENABLE KEYS */;
+UNLOCK TABLES;
 
-#
-# Table structure for table `wblist`
-#
+--
+-- Table structure for table `wblist`
+--
 
-CREATE TABLE wblist (
-  rid int(11) unsigned NOT NULL default '0',
-  sid int(11) NOT NULL default '0',
-  priority smallint(6) NOT NULL default '7',
-  email varchar(255) NOT NULL default '',
-  wb char(1) NOT NULL default ''
-  ) TYPE=MyISAM;
+DROP TABLE IF EXISTS `wblist`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `wblist` (
+  `rid` int(11) unsigned NOT NULL DEFAULT '0',
+  `sid` int(11) NOT NULL DEFAULT '0',
+  `priority` smallint(6) NOT NULL DEFAULT '7',
+  `email` varchar(255) NOT NULL DEFAULT '',
+  `wb` char(1) NOT NULL DEFAULT ''
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+/*!40101 SET character_set_client = @saved_cs_client */;
 
-#
-# Dumping data for table `wblist`
-#
+--
+-- Dumping data for table `wblist`
+--
 
+LOCK TABLES `wblist` WRITE;
+/*!40000 ALTER TABLE `wblist` DISABLE KEYS */;
+/*!40000 ALTER TABLE `wblist` ENABLE KEYS */;
+UNLOCK TABLES;
+/*!40103 SET TIME_ZONE=@OLD_TIME_ZONE */;
+
+/*!40101 SET SQL_MODE=@OLD_SQL_MODE */;
+/*!40014 SET FOREIGN_KEY_CHECKS=@OLD_FOREIGN_KEY_CHECKS */;
+/*!40014 SET UNIQUE_CHECKS=@OLD_UNIQUE_CHECKS */;
+/*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
+/*!40101 SET CHARACTER_SET_RESULTS=@OLD_CHARACTER_SET_RESULTS */;
+/*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
+/*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
+
+-- Dump completed on 2012-09-01 23:53:23
