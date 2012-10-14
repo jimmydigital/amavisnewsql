@@ -1,4 +1,4 @@
-#!/usr/local/bin/php
+#!/usr/bin/php
 <?php
 /**
  * @license http://opensource.org/licenses/gpl-license.php GNU Public License
@@ -20,7 +20,7 @@
  *
 */
 
-DEFINE ("BASEINCLUDE", "/htdocs/squirrel/plugins/amavisnewsql/");
+DEFINE ("BASEINCLUDE", "/var/www/squirrel/plugins/amavisnewsql/");
 
 // You should not have to change anything below this line
 // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -

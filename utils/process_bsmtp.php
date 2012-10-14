@@ -17,14 +17,12 @@
  * Be sure to include a trailing slash
 */
 
-DEFINE ("BASEINCLUDE", "/var/www/squirrel/plugins/amavisnewsql/");
 DEFINE ("QUARANTINEDIR", "/var/virusmails");
-
 
 // You should not have to change anything below this line
 // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-require(BASEINCLUDE."config.php");
-require(BASEINCLUDE."amavisnewsql.class.php");
+require("../config.php");
+require("../amavisnewsql.class.php");
 require "Log.php";
 
 
