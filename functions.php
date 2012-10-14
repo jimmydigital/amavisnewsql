@@ -33,6 +33,12 @@ function amavisnewsql_ErrorOut($err, $fatal=false) {
  */
 function amavisnewsql_PrintAddEditWB($action, $row = '', $calledfrom=NULL, $line=NULL) {
    global $color, $dbfp, $username;
+   
+   $Wselect  = '';
+   $Bselect  = '';
+   $priority = '';
+   $selected = '';
+   $address  = '';
 
    if($action == 'prep_edit') {
       $title = "Edit Address";

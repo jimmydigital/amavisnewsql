@@ -187,9 +187,9 @@ function DisplayHeader() {
 
 function DisplayQuarantineMessages() {
    global $CONFIG, $dbfp, $username, $color, $javascript_on, $data_dir;
-   sqgetGlobalVar('sort', $sort, SQ_REQUEST);
-   sqgetGlobalVar('field', $field, SQ_REQUEST);
-   sqgetGlobalVar('offset', $offset, SQ_REQUEST);
+   sqgetGlobalVar('sort', $sort, 'SQ_REQUEST');
+   sqgetGlobalVar('field', $field, 'SQ_REQUEST');
+   sqgetGlobalVar('offset', $offset, 'SQ_REQUEST');
    $plugindir = substr($_SERVER["PHP_SELF"], 0, strrpos($_SERVER["PHP_SELF"], '/'));
 
    if ($offset == null) $offset = 0;

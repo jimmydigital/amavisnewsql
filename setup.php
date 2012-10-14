@@ -46,10 +46,11 @@ function amavisnewsql_version()
 
 function amavisnew_right_main_bottom () {
 
+    global $data_dir;
     if (!sqsession_is_registered('inamavis')) {
-    include_once(SM_PATH . 'plugins/amavisnewsql/config.php');
+    include_once('SM_PATH' . 'plugins/amavisnewsql/config.php');
     #require('config.php');
-    sqgetGlobalVar('username',  $username, SQ_SESSION);
+    sqgetGlobalVar('username',  $username, 'SQ_SESSION');
     
     // Depending on how people login.. some virtual domain setup pass in wrongly formatted usernames
     // like user@domain.com@domain.com  This checks for it.. and removes the second.
@@ -79,7 +80,7 @@ function amavisnew_right_main_bottom () {
         include_once(SM_PATH.'plugins/amavisnewsql/amavisnewsql.class.php');
         include_once(SM_PATH.'include/validate.php');
         include_once(SM_PATH.'include/load_prefs.php');
-        global $data_dir;
+#        global $data_dir;
 
 
         // Connect to the DB

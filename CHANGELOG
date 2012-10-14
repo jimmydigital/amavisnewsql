@@ -1,7 +1,18 @@
 CHANGELOG - Started with version 0.8.0
 
+0.9 (10/2012)
 
-0.8
+o Lots of small tweaks to bring it up to date for the current php/squirrelmail/amavisnew
+  versions. No new features. 
+
+o Small change to how the cron jobs are run... check the README
+
+o Corrected a few uninitialized variables causing php notice logs
+
+o Moved development repo to github  https://github.com/jimmydigital/amavisnewsql/
+
+
+0.8 (7/2005)
 
 o Added the ability to turn the quarantine off on a per user basis.
    - If a user has one of the predefined policys active and the choose to not use the quarantine
