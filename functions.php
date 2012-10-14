@@ -18,11 +18,11 @@ function amavisnewsql_ErrorOut($err, $fatal=false) {
    if (is_array($err)) {
        print_r($err);
    } else {
-       $prev = bindtextdomain ('squirrelmail', SM_PATH . 'locale');
+       $prev = bindtextdomain ('squirrelmail', 'SM_PATH' . 'locale');
        textdomain ('squirrelmail');
        displayPageHeader($color, 'None');
        echo "<h3><font color=red>Error: $err</font></h3>";
-       $prev = bindtextdomain ('amavisnewsql', SM_PATH . 'plugins/amavisnewsql/locale');
+       $prev = bindtextdomain ('amavisnewsql', 'SM_PATH' . 'plugins/amavisnewsql/locale');
        textdomain ('amavisnewsql');
    }
    if($fatal) die();
@@ -183,10 +183,10 @@ function amavisnewsql_DisplayOptions($action = '', $row = '', $calledfrom=NULL, 
      $tag2_label = _("Kill Level");
   }
 
-  $prev = bindtextdomain ('squirrelmail', SM_PATH . 'locale');
+  $prev = bindtextdomain ('squirrelmail', 'SM_PATH' . 'locale');
   textdomain ('squirrelmail');
   displayPageHeader($color, 'None');
-  $prev = bindtextdomain ('amavisnewsql', SM_PATH . 'plugins/amavisnewsql/locale');
+  $prev = bindtextdomain ('amavisnewsql', 'SM_PATH' . 'plugins/amavisnewsql/locale');
   textdomain ('amavisnewsql');
 
 

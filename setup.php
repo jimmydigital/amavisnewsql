@@ -13,7 +13,7 @@
  */
 function amavisnewsql_version()
 {
-  return '0.8.0';
+  return '0.9.0';
 }
 
 //error_reporting(E_ALL);
@@ -22,8 +22,8 @@ function amavisnewsql_version()
 #if (defined('SM_PATH')) echo "Path :".SM_PATH;
 #if (!defined('SM_PATH')) { define('SM_PATH' , '../../'); }
 
-#include_once(SM_PATH.'functions/page_header.php');
-#include_once(SM_PATH.'functions/i18n.php');
+#include_once('SM_PATH'.'functions/page_header.php');
+#include_once('SM_PATH'.'functions/i18n.php');
 
 
 
@@ -36,7 +36,7 @@ function amavisnewsql_version()
 // at the options page for the plugin.. which might take a while if they are
 // not the curious type.
 
-#include(SM_PATH.'plugins/amavisnewsql/acbjcustom.php');
+#include('SM_PATH'.'plugins/amavisnewsql/acbjcustom.php');
 #amavisnewsql_UserExists();
 
 
@@ -76,10 +76,10 @@ function amavisnew_right_main_bottom () {
         setpref($data_dir, $username, 'email_address', $email);
     }
 
-        include_once(SM_PATH.'plugins/amavisnewsql/functions.php');
-        include_once(SM_PATH.'plugins/amavisnewsql/amavisnewsql.class.php');
-        include_once(SM_PATH.'include/validate.php');
-        include_once(SM_PATH.'include/load_prefs.php');
+        include_once('SM_PATH'.'plugins/amavisnewsql/functions.php');
+        include_once('SM_PATH'.'plugins/amavisnewsql/amavisnewsql.class.php');
+        include_once('SM_PATH'.'include/validate.php');
+        include_once('SM_PATH'.'include/load_prefs.php');
 #        global $data_dir;
 
 
@@ -174,7 +174,7 @@ function amavisnewsql_optpage_register_block () {
 function amavisnewsql_spam_quarantine ()
 {
     error_reporting(E_ALL);
-    require(SM_PATH . 'plugins/amavisnewsql/config.php');
+    require('SM_PATH' . 'plugins/amavisnewsql/config.php');
 
     if ($CONFIG["use_quarantine"])
     {

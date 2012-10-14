@@ -18,7 +18,7 @@ if (file_exists('../../include/init.php'))
 } elseif (file_exists('../../include/validate.php'))  
 {
     define('SM_PATH', '../../');
-    include_once(SM_PATH . 'include/validate.php');
+    include_once('SM_PATH' . 'include/validate.php');
 }
 
 global $plugins;
@@ -27,21 +27,21 @@ if (!in_array('amavisnewsql', $plugins)) exit;
 ###########################
 
 
-#if (defined(SM_PATH)) print "Yes";
+#if (defined('SM_PATH')) print "Yes";
 #if (!defined('SM_PATH')) { define('SM_PATH' , '../../'); }
 
-#include_once(SM_PATH.'include/validate.php');
-#include_once(SM_PATH.'functions/page_header.php');
-include_once(SM_PATH.'include/load_prefs.php');
-include_once(SM_PATH.'functions/i18n.php');
+#include_once('SM_PATH'.'include/validate.php');
+#include_once('SM_PATH'.'functions/page_header.php');
+include_once('SM_PATH'.'include/load_prefs.php');
+include_once('SM_PATH'.'functions/i18n.php');
 
-require(SM_PATH.'plugins/amavisnewsql/config.php');
-require(SM_PATH.'plugins/amavisnewsql/functions.php');
-require(SM_PATH.'plugins/amavisnewsql/amavisnewsql.class.php');
+require('SM_PATH'.'plugins/amavisnewsql/config.php');
+require('SM_PATH'.'plugins/amavisnewsql/functions.php');
+require('SM_PATH'.'plugins/amavisnewsql/amavisnewsql.class.php');
 
 
 /* Set up locale, for the error messages. */
-$prev = bindtextdomain ('amavisnewsql', SM_PATH . 'plugins/amavisnewsql/locale');
+$prev = bindtextdomain ('amavisnewsql', 'SM_PATH' . 'plugins/amavisnewsql/locale');
 sq_change_text_domain('amavisnewsql');
 #textdomain ('amavisnewsql');
 
@@ -76,7 +76,7 @@ if (!$dbfp->connect()) {
 }
 
 /*  Moved to setup.php
-#include(SM_PATH.'plugins/amavisnewsql/acbjcustom.php');
+#include('SM_PATH'.'plugins/amavisnewsql/acbjcustom.php');
 #amavisnewsql_UserExists();
 
 
@@ -108,9 +108,9 @@ if (!$dbfp->connect()) {
 
       break;
       case "set_quarantine_settings":
-            sqgetGlobalVar('frequency', $freq, SQ_REQUEST);
-            sqgetGlobalVar('retention', $retention, SQ_REQUEST);
-            sqgetGlobalVar('quarantineonoff', $qonoff, SQ_REQUEST);
+            sqgetGlobalVar('frequency', $freq, 'SQ_REQUEST');
+            sqgetGlobalVar('retention', $retention, 'SQ_REQUEST');
+            sqgetGlobalVar('quarantineonoff', $qonoff, 'SQ_REQUEST');
             if (!$dbfp->SetQuarantineSettings($username, $freq, $retention, $qonoff, __FILE__, __LINE__)) {
                  amavisnewsql_ErrorOut($dbfp->error, TRUE);
             }
@@ -151,7 +151,7 @@ if (!$dbfp->connect()) {
 
 
       case "set_policy":
-            sqgetGlobalVar('id', $target_id, SQ_REQUEST);
+            sqgetGlobalVar('id', $target_id, 'SQ_REQUEST');
             if(!$dbfp->SetPolicy($username, $target_id, __FILE__, __LINE__)) {
                 amavisnewsql_ErrorOut($dbfp->error, TRUE);
             }
@@ -160,8 +160,8 @@ if (!$dbfp->connect()) {
 
 
       case "set_custom_policy":
-            sqgetGlobalVar('tag2_level', $tag2_level, SQ_REQUEST);
-            sqgetGlobalVar('kill_level', $kill_level, SQ_REQUEST);
+            sqgetGlobalVar('tag2_level', $tag2_level, 'SQ_REQUEST');
+            sqgetGlobalVar('kill_level', $kill_level, 'SQ_REQUEST');
             if(!$dbfp->SetCustomPolicy($username, $tag2_level, $kill_level, __FILE__, __LINE__)) {
                 amavisnewsql_ErrorOut($dbfp->error, TRUE);
             }

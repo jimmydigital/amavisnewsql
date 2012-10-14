@@ -3,10 +3,10 @@
 if (!defined('SM_PATH')) { define('SM_PATH' , '../../'); }
 
 
-include_once(SM_PATH.'include/validate.php');
-include_once(SM_PATH.'functions/page_header.php');
-include_once(SM_PATH.'include/load_prefs.php');
-include_once(SM_PATH.'functions/i18n.php');
+include_once('SM_PATH'.'include/validate.php');
+include_once('SM_PATH'.'functions/page_header.php');
+include_once('SM_PATH'.'include/load_prefs.php');
+include_once('SM_PATH'.'functions/i18n.php');
 include_once('Net/SMTP.php');
 
 require('config.php');
@@ -16,7 +16,7 @@ include_once('amavisnewsql.class.php');
 
 
 /* Set up locale, for the error messages. */
-$prev = bindtextdomain ('amavisnewsql', SM_PATH . 'plugins/amavisnewsql/locale');
+$prev = bindtextdomain ('amavisnewsql', 'SM_PATH' . 'plugins/amavisnewsql/locale');
 textdomain ('amavisnewsql');
 
 
@@ -36,7 +36,7 @@ if(isset($_REQUEST)) {
    sqgetGlobalVar('action', $action, 'SQ_REQUEST');
 }
 
-#include(SM_PATH.'plugins/amavisnewsql/acbjcustom.php');
+#include('SM_PATH'.'plugins/amavisnewsql/acbjcustom.php');
 #amavisnewsql_UserExists();
 
 
@@ -55,7 +55,7 @@ if(isset($_REQUEST)) {
 
    switch ($action) {
       case "DELETE":
-            sqgetGlobalVar('msg', $msg, SQ_REQUEST);
+            sqgetGlobalVar('msg', $msg, 'SQ_REQUEST');
 
             if (count($msg) == 0) amavisnewsql_ErrorOut("You Must Select At Least One Message To Delete", TRUE);
 
@@ -69,7 +69,7 @@ if(isset($_REQUEST)) {
       break;
 
       case "RELEASE":
-            sqgetGlobalVar('msg', $msg, SQ_REQUEST);
+            sqgetGlobalVar('msg', $msg, 'SQ_REQUEST');
 
             if (count($msg) == 0) amavisnewsql_ErrorOut("You Must Select At Least One Message To Release", TRUE);
 
@@ -82,7 +82,7 @@ if(isset($_REQUEST)) {
       break;
 
       case "RELEASEADD":
-            sqgetGlobalVar('msg', $msg, SQ_REQUEST);
+            sqgetGlobalVar('msg', $msg, 'SQ_REQUEST');
 
             if (count($msg) == 0) amavisnewsql_ErrorOut("You Must Select At Least One Message To Release", TRUE);
 
@@ -116,10 +116,10 @@ function iseven($var) {
 function DisplayHeader() {
    global $CONFIG, $username, $color, $javascript_on;
 
-   $prev = bindtextdomain ('amavisnewsql', SM_PATH . 'plugins/amavisnewsql/locale');
+   $prev = bindtextdomain ('amavisnewsql', 'SM_PATH' . 'plugins/amavisnewsql/locale');
    textdomain ('amavisnewsql');
    displayPageHeader($color, 'Message Quarantine');
-   $prev = bindtextdomain ('squirrelmail', SM_PATH . 'plugins/squirrelmail/locale');
+   $prev = bindtextdomain ('squirrelmail', 'SM_PATH' . 'plugins/squirrelmail/locale');
    textdomain ('squirrelmail');
    $plugindir = substr($_SERVER["PHP_SELF"], 0, strrpos($_SERVER["PHP_SELF"], '/'));
 
@@ -227,7 +227,7 @@ function DisplayQuarantineMessages() {
    
    $num = count($res);
    
-   $prev = bindtextdomain ('amavisnewsql', SM_PATH . 'plugins/amavisnewsql/locale');
+   $prev = bindtextdomain ('amavisnewsql', 'SM_PATH' . 'plugins/amavisnewsql/locale');
    textdomain ('amavisnewsql');
 
    if($num == 0) echo "<font color=\"$color[2]\">" . _("No Messages in Quarantine") . "</font><br>";
