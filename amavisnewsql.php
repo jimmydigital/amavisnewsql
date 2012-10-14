@@ -17,8 +17,8 @@ if (file_exists('../../include/init.php'))
     //
 } elseif (file_exists('../../include/validate.php'))  
 {
-    define('SM_PATH', '../../');
-    include_once('SM_PATH' . 'include/validate.php');
+    define(SM_PATH, '../../');
+    include_once(SM_PATH . 'include/validate.php');
 }
 
 global $plugins;
@@ -32,12 +32,12 @@ if (!in_array('amavisnewsql', $plugins)) exit;
 
 #include_once('SM_PATH'.'include/validate.php');
 #include_once('SM_PATH'.'functions/page_header.php');
-include_once('SM_PATH'.'include/load_prefs.php');
-include_once('SM_PATH'.'functions/i18n.php');
+include_once(SM_PATH.'include/load_prefs.php');
+include_once(SM_PATH.'functions/i18n.php');
 
-require('SM_PATH'.'plugins/amavisnewsql/config.php');
-require('SM_PATH'.'plugins/amavisnewsql/functions.php');
-require('SM_PATH'.'plugins/amavisnewsql/amavisnewsql.class.php');
+require(SM_PATH.'plugins/amavisnewsql/config.php');
+require(SM_PATH.'plugins/amavisnewsql/functions.php');
+require(SM_PATH.'plugins/amavisnewsql/amavisnewsql.class.php');
 
 
 /* Set up locale, for the error messages. */

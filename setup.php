@@ -174,7 +174,7 @@ function amavisnewsql_optpage_register_block () {
 function amavisnewsql_spam_quarantine ()
 {
     error_reporting(E_ALL);
-    require('SM_PATH' . 'plugins/amavisnewsql/config.php');
+    require(SM_PATH . '/plugins/amavisnewsql/config.php');
 
     if ($CONFIG["use_quarantine"])
     {

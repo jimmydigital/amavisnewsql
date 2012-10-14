@@ -3,10 +3,10 @@
 if (!defined('SM_PATH')) { define('SM_PATH' , '../../'); }
 
 
-include_once('SM_PATH'.'include/validate.php');
-include_once('SM_PATH'.'functions/page_header.php');
-include_once('SM_PATH'.'include/load_prefs.php');
-include_once('SM_PATH'.'functions/i18n.php');
+include_once(SM_PATH.'include/validate.php');
+include_once(SM_PATH.'functions/page_header.php');
+include_once(SM_PATH.'include/load_prefs.php');
+include_once(SM_PATH.'functions/i18n.php');
 include_once('Net/SMTP.php');
 
 require('config.php');
