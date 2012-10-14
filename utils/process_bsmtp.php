@@ -116,6 +116,7 @@ function process_file($dbfp, $file) {
 
     if (count($rcpt) == 0) {
         $log->log("ERROR: $file - no recipients", LOG_ERR);
+        rename(QUARANTINEDIR."/$file", QUARANTINEDIR."/.notstored/$file");
         return;
     }
 

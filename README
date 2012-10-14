@@ -156,9 +156,9 @@ Here is how it works...
 
 Suggested cron entries are:
 
-*/5 * * * * root /usr/local/amavisnewsql/process_bsmtp.php
-0 15 * * * root /usr/local/amavisnewsql/cleanquarantine.php
-30 16 * * * root /usr/local/amavisnewsql/generatedigest.php
+*/5 * * * * root cd /usr/local/amavisnewsql/utils/; ./process_bsmtp.php
+0 15 * * * root cd /usr/local/amavisnewsql/utils/; ./cleanquarantine.php
+30 16 * * * root cd /usr/local/amavisnewsql/utils/; ./generatedigest.php
 
 I use 4:30pm so that people may review their quarantine before the work day
 is over and still have a high chance of seeing everything from that day.

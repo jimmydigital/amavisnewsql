@@ -18,16 +18,17 @@
 */
 
 
-DEFINE ("BASEINCLUDE", "/var/www//squirrel/plugins/amavisnewsql/");
+#DEFINE ("BASEINCLUDE", "/var/www//squirrel/plugins/amavisnewsql/");
 
 
 
 // You should not have to change anything below this line
 // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
-include(BASEINCLUDE."config.php");
-include(BASEINCLUDE."amavisnewsql.class.php");
-include 'htmlMimeMail/htmlMimeMail.php';
+require("../config.php");
+require("..//amavisnewsql.class.php");
+#require '../htmlMimeMail/htmlMimeMail.php';
+require('../htmlMimeMail5/htmlMimeMail5.php');
 
 $DEBUG = false;
 
@@ -44,7 +45,7 @@ for ($i=0; $i < count($users); $i++) {
    
    if (! $messages && !is_array($messages)) die("Error getting messages for ".$users[$i]["username"] ." :$dbfp->error\n");
    
-   $mail = new htmlMimeMail();
+   $mail = new htmlMimeMail5();
    $bodyhtml = "
              <html><body>
              <p>The following are the top 100 lowest scoring messages being held in your Spam Quarantine</p>

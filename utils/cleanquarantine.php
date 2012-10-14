@@ -22,17 +22,16 @@
  *
 */
 
-DEFINE ("BASEINCLUDE", "/var/www/squirrel/plugins/amavisnewsql/");
+#DEFINE ("BASEINCLUDE", "/var/www/squirrel/plugins/amavisnewsql/");
 
 
 
 
 // You should not have to change anything below this line
 // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-
-include(BASEINCLUDE."config.php");
-include(BASEINCLUDE."amavisnewsql.class.php");
-include "Log.php";
+require('../config.php');
+require('../amavisnewsql.class.php');
+require('Log.php');
 
 $conf  = array();
 $log = &Log::singleton('syslog', LOG_MAIL, 'cleanquarantine.php', $conf);
