@@ -103,6 +103,14 @@ $sql_select_white_black_list = 'SELECT wb FROM wblist'.
   ' WHERE (rid=?) AND (wblist.email IN (%k))'.
   ' ORDER BY wblist.priority DESC';
 
+and
+
+$sql_select_policy =
+ 'SELECT *,users.id'.
+ ' FROM users LEFT JOIN policy ON users.policy_id=policy.id'.
+ ' WHERE users.email IN (%k) or users.username in (%k) ORDER BY users.priority DESC';
+
+
 o Also in amavisd.conf be sure to enable sql lookups with
   @lookup_sql_dsn to match your database settings.
 
@@ -153,11 +161,11 @@ Suggested cron entries are:
 # Keep the .notstored directory cleaned out.. this deletes everything older
 # than 30 days. Make sure the path is right! 
 #
-3 5 * * * root cd /var/virusmails/.notstored; find . -mtime +30 -maxdepth 1 -exec rm {} \;
+3 5 * * * cd /var/virusmails/.notstored; find . -mtime +30 -maxdepth 1 -exec rm {} \;
 
-*/5 * * * * root cd /usr/local/amavisnewsql/utils/; ./process_bsmtp.php
-0 15 * * * root cd /usr/local/amavisnewsql/utils/; ./cleanquarantine.php
-30 16 * * * root cd /usr/local/amavisnewsql/utils/; ./generatedigest.php
+*/5 * * * * cd /usr/local/amavisnewsql/; utils/process_bsmtp.php
+0 15 * * * cd /usr/local/amavisnewsql/; utils/cleanquarantine.php
+30 16 * * * cd /usr/local/amavisnewsql/; utils/generatedigest.php
 
 
 I use 4:30pm so that people may review their quarantine before the work day

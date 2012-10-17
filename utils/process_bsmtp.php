@@ -21,8 +21,8 @@ DEFINE ("QUARANTINEDIR", "/var/virusmails");
 
 // You should not have to change anything below this line
 // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-require("../config.php");
-require("../amavisnewsql.class.php");
+require('config.php');
+require('amavisnewsql.class.php');
 require "Log.php";
 
 

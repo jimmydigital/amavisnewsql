@@ -25,10 +25,9 @@
 // You should not have to change anything below this line
 // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
-require("../config.php");
-require("..//amavisnewsql.class.php");
-#require '../htmlMimeMail/htmlMimeMail.php';
-require('../htmlMimeMail5/htmlMimeMail5.php');
+require('config.php');
+require('amavisnewsql.class.php');
+require('htmlMimeMail5/htmlMimeMail5.php');
 
 $DEBUG = false;
 
