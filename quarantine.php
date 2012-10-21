@@ -10,7 +10,7 @@ include_once(SM_PATH.'include/load_prefs.php');
 include_once(SM_PATH.'functions/i18n.php');
 include_once('Net/SMTP.php');
 
-require('config.php');
+include_once('config.php');
 include_once('functions.php');
 include_once('amavisnewsql.class.php');
 
@@ -36,7 +36,6 @@ if(isset($_REQUEST)) {
    sqgetGlobalVar('action', $action, 'SQ_REQUEST');
 }
 
-#include('SM_PATH'.'plugins/amavisnewsql/acbjcustom.php');
 #amavisnewsql_UserExists();
 
 

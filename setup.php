@@ -40,12 +40,6 @@ function amavisnewsql_info()
 
 
 
-#if (defined('SM_PATH')) echo "Path :".SM_PATH;
-#if (!defined('SM_PATH')) { define('SM_PATH' , '../../'); }
-
-#include_once('SM_PATH'.'functions/page_header.php');
-#include_once('SM_PATH'.'functions/i18n.php');
-
 
 
 
@@ -57,7 +51,7 @@ function amavisnewsql_info()
 // at the options page for the plugin.. which might take a while if they are
 // not the curious type.
 
-#include('SM_PATH'.'plugins/amavisnewsql/acbjcustom.php');
+#include_once('SM_PATH'.'plugins/amavisnewsql/acbjcustom.php');
 #amavisnewsql_UserExists();
 
 
