@@ -3,10 +3,12 @@
  * AmavisNewSQL - AmavisNew+SQL+SpamAssassin+Quarantine plugin for SquirrelMail
  *
  * @license http://opensource.org/licenses/gpl-license.php GNU Public License
- * @author Jared Watkins 2003 <jared@watkins.net>
+ * @author Jared Watkins 2003,2012 https://github.com/jimmydigital/amavisnewsql
  * @package amavisnewsql
  * $Id: setup.php, v
 */
+
+error_reporting(E_ALL);
 
 /**
  * Required for SM versioning
@@ -16,7 +18,26 @@ function amavisnewsql_version()
   return '0.9.0';
 }
 
-//error_reporting(E_ALL);
+function amavisnewsql_info()
+{
+    return array (
+        'english_name'           => 'AmavisNew SQL',
+        'version'                => amavisnewsql_version(),
+        'authors'                => array (
+                                     'Jared Watkins' => array ('email' => 'jared@jaredwatkins.com', 'sm_site_username' => 'jimydigital',),
+                                     ),
+        'required_sm_version'    => '1.4.0',
+        'requires_configuration' => 1,
+        'requires_source_patch'  => 0,
+        'summary'                => 'Provides per user W/B list, tag/block levels and per user spam quarantine.',
+        'details'                => 'This plugin lets users change a pre-defined set of SpamAssassin settings when those settings are stored in a SQL DB rather than a config file. It also allows you to use a quarantine database for questionable mail. This plugin was designed with enterprise use in mind, and differs from other plugins in that it works with amavis-new rather than SpamAssassin directly. Most of the code lives in an external class for you to reuse in your own admin tools.. and even has support for SOAP calls to perform common tasks.',
+        'required_pear_packages' => array('Log', 'MDB2', 'Net_SMTP'),
+        'other_requirements'     => 'Database, MTA, amavis-new',
+        'external_project_uri'   => 'https://github.com/jimmydigital/amavisnewsql',
+        );
+}
+
+
 
 
 #if (defined('SM_PATH')) echo "Path :".SM_PATH;
@@ -49,7 +70,6 @@ function amavisnew_right_main_bottom () {
     global $data_dir;
     if (!sqsession_is_registered('inamavis')) {
     include_once('SM_PATH' . 'plugins/amavisnewsql/config.php');
-    #require('config.php');
     sqgetGlobalVar('username',  $username, 'SQ_SESSION');
     
     // Depending on how people login.. some virtual domain setup pass in wrongly formatted usernames
@@ -173,7 +193,7 @@ function amavisnewsql_optpage_register_block () {
 
 function amavisnewsql_spam_quarantine ()
 {
-    error_reporting(E_ALL);
+    //error_reporting(E_ALL);
     require(SM_PATH . '/plugins/amavisnewsql/config.php');
 
     if ($CONFIG["use_quarantine"])
@@ -181,5 +201,3 @@ function amavisnewsql_spam_quarantine ()
         displayInternalLink ('plugins/amavisnewsql/quarantine.php', _("[Quarantine] "), 'right');
     }
 }
-
-?>

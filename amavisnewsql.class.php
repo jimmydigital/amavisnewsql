@@ -3,7 +3,7 @@
  * Class for dealing with a database for amavisnewsql or other tools
  *
  * @license http://opensource.org/licenses/gpl-license.php GNU Public License
- * @author Jared Watkins 2003 <jared@watkins.net>
+ * @author Jared Watkins 2003,2012 https://github.com/jimmydigital/amavisnewsql
  */
 
 /**
@@ -1236,5 +1236,3 @@ class AmavisNewSQL {
 
 
 } // Class
-
-?>

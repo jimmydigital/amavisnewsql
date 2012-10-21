@@ -4,10 +4,12 @@
  * branch point.
  *
  * @license http://opensource.org/licenses/gpl-license.php GNU Public License
- * @author Jared Watkins 2003 <jared@watkins.net>
+ * @author Jared Watkins 2003,2012 https://github.com/jimmydigital/amavisnewsql
  * @package amavisnewsql
  * $Id: amavisnewsql.php, v
 */
+error_reporting(E_ALL);
+
 if (file_exists('../../include/init.php'))  
 {
     include_once('../../include/init.php');
@@ -46,7 +48,6 @@ sq_change_text_domain('amavisnewsql');
 #textdomain ('amavisnewsql');
 
 
-error_reporting(E_ALL);
 
 sqgetGlobalVar('username',  $username, SQ_SESSION);
 
@@ -174,5 +175,3 @@ if (!$dbfp->connect()) {
    }
 
 sq_change_text_domain('squirrelmail');
-
-?>

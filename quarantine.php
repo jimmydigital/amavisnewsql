@@ -1,4 +1,5 @@
 <?php
+error_reporting(E_ALL);
 
 if (!defined('SM_PATH')) { define('SM_PATH' , '../../'); }
 
@@ -20,7 +21,6 @@ $prev = bindtextdomain ('amavisnewsql', 'SM_PATH' . 'plugins/amavisnewsql/locale
 textdomain ('amavisnewsql');
 
 
-//error_reporting(E_ALL);
 
 
 if(!$CONFIG["use_quarantine"]) die();
@@ -350,6 +350,3 @@ function ShowSortButton($sort, $field) {
 
 
 // ---------------------------------------------------------------
-
-
-?>

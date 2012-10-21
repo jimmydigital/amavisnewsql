@@ -3,7 +3,7 @@
  * The server side of my example soap calls.
  *
  * @license http://opensource.org/licenses/gpl-license.php GNU Public License
- * @author Jared Watkins 2003 <jared@watkins.net>
+ * @author Jared Watkins 2003,2012 https://github.com/jimmydigital/amavisnewsql
  * @package amavisnewsql 
  * $Id: server.php, v
 */
