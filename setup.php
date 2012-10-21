@@ -59,64 +59,63 @@ function amavisnewsql_info()
 // Check to see if they are in the DB.. Add them if not
 // we only want to do this once per session
 
-function amavisnew_right_main_bottom () {
-
+function amavisnewsql_login_verified ()
+{
     global $data_dir;
-    if (!sqsession_is_registered('inamavis')) {
-    include_once('SM_PATH' . 'plugins/amavisnewsql/config.php');
-    sqgetGlobalVar('username',  $username, 'SQ_SESSION');
+    include_once(SM_PATH . 'plugins/amavisnewsql/config.php');
     
-    // Depending on how people login.. some virtual domain setup pass in wrongly formatted usernames
-    // like user@domain.com@domain.com  This checks for it.. and removes the second.
+    #error_log("Config: " .SM_PATH .  getcwd() . count($CONFIG));
+    #sqgetGlobalVar('inamavis', $isRegistered);
+    #error_log('Pre-set Is Registered: ' . sqsession_is_registered('inamavis') . "var :$isRegistered:");
     
-    $pos = strpos($username, "@");
-    $pos2 = strrpos($username, "@");
+    if (!sqsession_is_registered('inamavis'))
+    {
+        sqgetGlobalVar('username',  $username, 'SQ_SESSION');
+        // Depending on how people login.. some virtual domain setup pass in wrongly formatted usernames
+        // like user@domain.com@domain.com  This checks for it.. and removes the second.
     
-    if ($pos != $pos2) {
-      if ($pos2 !== FALSE) $username = substr($username, 0, $pos2);
-    }
-
-
-    $email  = getPref($data_dir, $username, 'email_address');
-
-    if ($email == null) {
-
-        if (strpos($username, "@")) {
-            $email = $username;
-        } else {
-            $email = "$username@".$CONFIG['default_domain'];
+        $pos = strpos($username, "@");
+        $pos2 = strrpos($username, "@");
+    
+        if ($pos != $pos2)
+        {
+          if ($pos2 !== FALSE) $username = substr($username, 0, $pos2);
         }
 
-        setpref($data_dir, $username, 'email_address', $email);
-    }
 
-        include_once('SM_PATH'.'plugins/amavisnewsql/functions.php');
-        include_once('SM_PATH'.'plugins/amavisnewsql/amavisnewsql.class.php');
-        include_once('SM_PATH'.'include/validate.php');
-        include_once('SM_PATH'.'include/load_prefs.php');
-#        global $data_dir;
+        $email  = getPref($data_dir, $username, 'email_address');
 
+        if ($email == null)
+        {
+            if (strpos($username, "@")) { $email = $username; } 
+            else { $email = "$username@".$CONFIG['default_domain']; }
 
+            setpref($data_dir, $username, 'email_address', $email);
+        }
+
+        include_once(SM_PATH . 'plugins/amavisnewsql/functions.php');
+        include_once(SM_PATH . 'plugins/amavisnewsql/amavisnewsql.class.php');
+        
         // Connect to the DB
         $dbfp = new AmavisNewSQL($CONFIG);
-        if ( ! $dbfp->connect()) {
+        if ( ! $dbfp->connect())
+        {
             amavisnewsql_ErrorOut($dbfp->error);
             exit;
         }
 
-
         $err = $dbfp->UserExists($username, __FILE__, __LINE__);
+        if (is_bool($err) && $err == FALSE)
+        {
+            amavisnewsql_ErrorOut("User: $username not in db: " . $dbfp->error, TRUE);
 
-        if (is_bool($err) && $err == FALSE) {
+        } else if ($err == null)
+        {
+            #error_log('data_dir: ' . print_r($data_dir));
 
-            amavisnewsql_ErrorOut($dbfp->error, TRUE);
-
-        } else if ($err == null) {
-            print_r($data_dir);
-
-            if (!$dbfp->CreateUser($username, $data_dir)) {
-
-                amavisnewsql_ErrorOut($dbfp->error, TRUE);
+            if (!$dbfp->CreateUser($username, $data_dir))
+            {
+                amavisnewsql_ErrorOut("Unable to create user $username: " . $dbfp->error, TRUE);
 
             } else { // success
 
@@ -124,12 +123,14 @@ function amavisnew_right_main_bottom () {
                sqsession_register($inamavis, 'inamavis');
             }
 
-        } else if ($err == TRUE) {  // they are already in there
-
-               $inamavis = 't';
-               sqsession_register($inamavis, 'inamavis');
+        } else if ($err == TRUE)  // they are already in there
+        {  
+            $inamavis = 't';
+            sqsession_register($inamavis, 'inamavis');
         }
     }
+    #sqgetGlobalVar('inamavis', $isRegistered);
+    #error_log('Post-set Is Registered: ' . sqsession_is_registered('inamavis') . "var :$isRegistered:");
 }
 
 
@@ -142,7 +143,7 @@ function squirrelmail_plugin_init_amavisnewsql () {
 
   $squirrelmail_plugin_hooks['read_body_header_right']['amavisnewsql'] = 'amavisnewsql_address_add';
 
-  $squirrelmail_plugin_hooks['right_main_bottom']['amavisnewsql'] = 'amavisnew_right_main_bottom';
+  $squirrelmail_plugin_hooks['login_verified']['amavisnewsql'] = 'amavisnewsql_login_verified';
 
   $squirrelmail_plugin_hooks['menuline']['amavisnewsql'] = 'amavisnewsql_spam_quarantine';
 }
