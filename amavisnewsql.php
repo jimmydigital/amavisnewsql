@@ -19,7 +19,7 @@ if (file_exists('../../include/init.php'))
     //
 } elseif (file_exists('../../include/validate.php'))  
 {
-    define(SM_PATH, '../../');
+    define('SM_PATH', '../../');
     include_once(SM_PATH . 'include/validate.php');
 }
 

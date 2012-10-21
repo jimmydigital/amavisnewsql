@@ -1,10 +1,15 @@
 <?php
 
+$CONFIG["BASEINCLUDE"] = "/var/www/squirrel/plugins/amavisnewsql/";
+
 // DSN for DB
 // Format is DBTYPE://USERNAME:PASSWORD@HOST/DATABASE
 // See PEAR docs for supported database types
 
-$CONFIG["dsn"] = 'pgsql://postgres:@localhost/amavis';
+// Enable only one of these =]
+//
+#$CONFIG["dsn"] = 'mysql://amavisnewsql:password@localhost/amavisnewsql';
+#$CONFIG["dsn"] = 'pgsql://postgres:@localhost/amavis';
 
 
 // The id in the users table of your '.' catch all entry for global w/b listing
@@ -54,4 +59,3 @@ $CONFIG["webmail_url"] = "http://webmail.yourdomain.com";
 $CONFIG["digest_subject"] = "Mail Server Quarantine Report";
 $CONFIG["digest_from"] = '"Spam Assassin" <noreply@yourdomain.com>';
 
-?>

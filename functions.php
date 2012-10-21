@@ -440,4 +440,4 @@ if(count($policyList) == 0) {
 $dbfp->disconnect();
 echo "</body></html>";
 } //function amavisnewsql_DisplayOptions
-?>
+
