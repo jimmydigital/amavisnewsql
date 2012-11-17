@@ -1,4 +1,6 @@
 SOAP was introduced in 0.5
+Library updated for 0.9.0 but not yet tested extensively
+
 
 Here I will expose common methods that you might want to use to integrate
 this software into other management tools you already have. In my case the
@@ -7,7 +9,7 @@ terminated from the company. If you don't do this.. there is a danger of
 mail continuing to be quarantined after they are gone.
 
 I am using the lib called nusoap which I include here.. but can be obtained
-from the source at: http://dietrich.ganx4.com/nusoap/index.php
+from the source at: http://sourceforge.net/projects/nusoap/
 
 I have provided an example of how to use a client call with this soap server.
 Most of the work takes place in the class.. so not much is required to add

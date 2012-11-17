@@ -8,7 +8,7 @@
  * $Id: server.php, v
 */
 
-require_once ("../nusoap.php");
+require_once ("lib/nusoap.php");
 require_once("../amavisnewsql.class.php");
 require_once ("../config.php");
 

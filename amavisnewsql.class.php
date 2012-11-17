@@ -1143,7 +1143,7 @@ class AmavisNewSQL {
       function uid($string) {
          $this->error = null;
 
-         if(ereg("@", $string)) {
+         if(preg_match("/@/", $string)) {
              $q = "select id from $this->users_table where email = '$string' or username = '$string'";
          } else {
              $q = "select id from $this->users_table where username = '$string'";

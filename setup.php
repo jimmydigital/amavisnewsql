@@ -158,9 +158,9 @@ function amavisnewsql_address_add() {  // Borrowed from address_add plugin
 
     $IP_RegExp_Match = '\\[?[0-9]{1,3}(\\.[0-9]{1,3}){3}\\]?';
     $Host_RegExp_Match = '(' . $IP_RegExp_Match . '|[0-9a-z]([-.]?[0-9a-z])*\\.[a-z][a-z]+)';
-    $Email_RegExp_Match = '[0-9a-z]([-_.+|]?[_0-9a-z|])*(%' . $Host_RegExp_Match . ')?@' . $Host_RegExp_Match;
+    $Email_RegExp_Match = '/[0-9a-z]([-_.+|]?[_0-9a-z|])*(%' . $Host_RegExp_Match . ')?@' . $Host_RegExp_Match;
     $regs = array();
-    while (eregi($Email_RegExp_Match, $decodedfrom, $regs)) {
+    while (preg_match("/$Email_RegExp_Match/i", $decodedfrom, $regs)) {
        $decodedfrom = substr(strstr($decodedfrom, $regs[0]), strlen($regs[0]));
        $fromaddress = urlencode($regs[0]);
     }

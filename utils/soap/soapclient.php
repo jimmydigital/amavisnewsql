@@ -14,7 +14,7 @@
  * $Id: soapclient.php, v
 */
 
-require_once ("nusoap.php");
+require_once ("lib/nusoap.php");
 
 $soapclient = new soapclient('http://localhost/squirrel/plugins/amavisnewsql/soap/server.php');
 $soapclient->setCredentials('example', 'password');
