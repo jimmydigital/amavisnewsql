@@ -161,7 +161,7 @@ Suggested cron entries are:
 # Keep the .notstored directory cleaned out.. this deletes everything older
 # than 30 days. Make sure the path is right! 
 #
-3 5 * * * cd /var/virusmails/.notstored; find . -mtime +30 -maxdepth 1 -exec rm {} \;
+3 5 * * * cd /var/virusmails/.notstored; find . -maxdepth 1 -mtime +30 -exec rm {} \;
 
 */5 * * * * cd /usr/local/amavisnewsql/; utils/process_bsmtp.php
 0 15 * * * cd /usr/local/amavisnewsql/; utils/cleanquarantine.php
